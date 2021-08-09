@@ -167,6 +167,7 @@ return [
          */
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         L5Swagger\L5SwaggerServiceProvider::class,
+        Lanin\Laravel\ApiDebugger\ServiceProvider::class,
 
         /*
          * Application Service Providers...
