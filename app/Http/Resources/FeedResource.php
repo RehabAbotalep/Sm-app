@@ -22,6 +22,7 @@ class FeedResource extends JsonResource
             'created_at' => $this->created_at->timestamp,
             'comments' => CommentResource::collection($this->comments),
             'comments_count'=> $this->comments_count,
+            'media' => MediaResource::collection($this->media)
         ];
     }
 }

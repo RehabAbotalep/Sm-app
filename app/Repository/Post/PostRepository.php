@@ -12,21 +12,22 @@ class PostRepository extends BaseRepository implements IPostRepository
     /**
      * @var Post
      */
-    private $model;
+    protected static $model;
 
     public function __construct(Post $post)
     {
-        $this->model = $post;
+        self::$model = $post;
     }
 
     public function paginate(int $perPage = null, array $columns = ['*'], string $pageName = 'page', int $page = null): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
-        return $this->model::with([
+        return self::$model::with([
             'creator',
             'creator.profile',
             'comments',
             'comments.commentor',
-            'comments.commentor.profile'
+            'comments.commentor.profile',
+            'medai'
         ])->paginate(
             $perPage,
             $columns,
