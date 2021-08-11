@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API\V1\Auth;
 
 use App\Http\Controllers\APIV1Controller;
 use App\Http\Resources\UserProfileResource;
+use App\Jobs\SenLogedUserEmail;
+use App\Mail\UserLoggedMail;
 use App\Models\User;
 use App\Services\AccessTokenService;
 use Nette\Schema\ValidationException;
@@ -27,6 +29,12 @@ class LoginController extends APIV1Controller
         $response = $this->accessTokenService->issueToken($request);
         $tokenData = json_decode($response->getContent(), true);
         $user = User::where('email', $data['username'])->firstOrFail();
+
+        //send Email
+       // \Mail::to($data['username'])->send(new UserLoggedMail());
+
+        dispatch(new SenLogedUserEmail($data['username']));
+
         $tokenData['user'] = new UserProfileResource($user);
 
         return $this->ok($tokenData);
