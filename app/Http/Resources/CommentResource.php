@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FeedResource extends JsonResource
+class CommentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,12 +16,8 @@ class FeedResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'color' => $this->color,
-            'creator' => new UserProfileResource($this->creator),
             'body' => $this->body,
-            'created_at' => $this->created_at->timestamp,
-            'comments' => CommentResource::collection($this->comments),
-            'comments_count'=> $this->comments_count,
+            'commentor' => new UserProfileResource($this->commentor)
         ];
     }
 }

@@ -21,11 +21,18 @@ class PostRepository extends BaseRepository implements IPostRepository
 
     public function paginate(int $perPage = null, array $columns = ['*'], string $pageName = 'page', int $page = null): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
-        return $this->model::with(['creator', 'creator.profile'])->paginate(
+        return $this->model::with([
+            'creator',
+            'creator.profile',
+            'comments',
+            'comments.commentor',
+            'comments.commentor.profile'
+        ])->paginate(
             $perPage,
             $columns,
             $pageName,
             $page
         );
+
     }
 }

@@ -23,7 +23,7 @@ class FeedService
     {
         return Cache::rememberForever("feed", function () {
             return $this->postRepository->paginate(
-                request()->query->get('limit', 200)
+                request()->query->get('limit', 5)
             );
         });
     }
